@@ -1,13 +1,13 @@
 Summary:	A commandline flags library that allows for distributed flags
 Summary(pl.UTF-8):	Biblioteka flag linii poleceń pozwalająca na rozproszone flagi
 Name:		gflags
-Version:	1.5
+Version:	1.6
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: http://code.google.com/p/google-gflags/downloads/list
 Source0:	http://google-gflags.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	0e66a83014efcd395d936c7fb7e71fd8
+# Source0-md5:	fa2cd6ee449f5e77fa7d43054973feba
 URL:		http://code.google.com/p/google-gflags/
 BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -78,9 +78,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS COPYING ChangeLog NEWS README
 %attr(755,root,root) %{_bindir}/gflags_completions.sh
 %attr(755,root,root) %{_libdir}/libgflags.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgflags.so.0
+%attr(755,root,root) %ghost %{_libdir}/libgflags.so.2
 %attr(755,root,root) %{_libdir}/libgflags_nothreads.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgflags_nothreads.so.0
+%attr(755,root,root) %ghost %{_libdir}/libgflags_nothreads.so.2
 
 %files devel
 %defattr(644,root,root,755)
