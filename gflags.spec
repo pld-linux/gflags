@@ -1,14 +1,14 @@
 Summary:	A commandline flags library that allows for distributed flags
 Summary(pl.UTF-8):	Biblioteka flag linii poleceń pozwalająca na rozproszone flagi
 Name:		gflags
-Version:	1.7
+Version:	2.0
 Release:	1
 License:	BSD
 Group:		Libraries
-#Source0Download: http://code.google.com/p/google-gflags/downloads/list
-Source0:	http://google-gflags.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	fb3fc36b24d13de83b7ba0ff6227230c
-URL:		http://code.google.com/p/google-gflags/
+#Source0Download: http://code.google.com/p/gflags/downloads/list
+Source0:	http://gflags.googlecode.com/files/%{name}-%{version}.tar.gz
+# Source0-md5:	e02268c1e90876c809ec0ffa095da864
+URL:		http://code.google.com/p/gflags/
 BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
