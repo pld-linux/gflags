@@ -1,0 +1,11 @@
+--- gflags-2.1.1/CMakeLists.txt.orig	2014-03-30 16:41:29.000000000 +0200
++++ gflags-2.1.1/CMakeLists.txt	2014-10-18 20:36:53.007925298 +0200
+@@ -257,6 +257,8 @@
+         set_target_properties (
+           gflags${opts}-${type} PROPERTIES COMPILE_DEFINITIONS "${defines}"
+                                            OUTPUT_NAME "gflags${opts}"
++					   VERSION ${PACKAGE_VERSION}
++					   SOVERSION 2
+         )
+         if (HAVE_SHLWAPI_H)
+           target_link_libraries (gflags${opts}-${type} shlwapi.lib)
