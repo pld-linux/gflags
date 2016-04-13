@@ -1,17 +1,17 @@
 Summary:	A commandline flags library that allows for distributed flags
 Summary(pl.UTF-8):	Biblioteka flag linii poleceń pozwalająca na rozproszone flagi
 Name:		gflags
-Version:	2.1.1
-Release:	4
+Version:	2.1.2
+Release:	1
 License:	BSD
 Group:		Libraries
+#Source0Download: https://github.com/gflags/gflags/releases
 Source0:	https://github.com/schuhschuh/gflags/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	18acc0ae270672a70a86b33ebbe9761b
+# Source0-md5:	ac432de923f9de1e9780b5254884599f
 Source1:	libgflags.pc
 Source2:	libgflags_nothreads.pc
-Patch0:		%{name}-libversion.patch
-Patch1:		%{name}-nothreads.patch
-URL:		http://code.google.com/p/gflags/
+Patch0:		%{name}-nothreads.patch
+URL:		http://gflags.github.io/gflags/
 BuildRequires:	cmake >= 2.8.4
 BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -56,7 +56,6 @@ Statyczna biblioteka gflags.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %{__sed} -i \
 	-e 's|LIBRARY_INSTALL_DIR lib|LIBRARY_INSTALL_DIR %{_lib}|g' \
@@ -91,7 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS.txt COPYING.txt ChangeLog.txt NEWS.txt README.txt
+%doc AUTHORS.txt COPYING.txt ChangeLog.txt README.md
 %attr(755,root,root) %{_bindir}/gflags_completions.sh
 %attr(755,root,root) %{_libdir}/libgflags.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgflags.so.2
@@ -100,7 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc doc/{gflags.html,designstyle.css}
+%doc doc/{index.html,designstyle.css}
 %attr(755,root,root) %{_libdir}/libgflags.so
 %attr(755,root,root) %{_libdir}/libgflags_nothreads.so
 %{_includedir}/gflags
