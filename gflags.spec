@@ -1,18 +1,16 @@
 Summary:	A commandline flags library that allows for distributed flags
 Summary(pl.UTF-8):	Biblioteka flag linii poleceń pozwalająca na rozproszone flagi
 Name:		gflags
-Version:	2.1.2
+Version:	2.2.0
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/gflags/gflags/releases
 Source0:	https://github.com/schuhschuh/gflags/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	ac432de923f9de1e9780b5254884599f
-Source1:	libgflags.pc
-Source2:	libgflags_nothreads.pc
-Patch0:		%{name}-nothreads.patch
+# Source0-md5:	b99048d9ab82d8c56e876fb1456c285e
+Patch0:		%{name}-pc-nothreads.patch
 URL:		http://gflags.github.io/gflags/
-BuildRequires:	cmake >= 2.8.4
+BuildRequires:	cmake >= 2.8.12
 BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -57,11 +55,6 @@ Statyczna biblioteka gflags.
 %setup -q
 %patch0 -p1
 
-%{__sed} -i \
-	-e 's|LIBRARY_INSTALL_DIR lib|LIBRARY_INSTALL_DIR %{_lib}|g' \
-	-e 's|CONFIG_INSTALL_DIR  lib/cmake|CONFIG_INSTALL_DIR  %{_lib}/cmake|g' \
-	CMakeLists.txt
-
 %build
 install -d build
 cd build
@@ -75,13 +68,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# .pc files used to be provided before gflags 2.1; reintroduce them
-install -d $RPM_BUILD_ROOT%{_pkgconfigdir}
-for f in %{SOURCE1} %{SOURCE2} ; do
-	sed -e "s|@prefix@|%{_prefix}|;s|@libdir@|%{_libdir}|" "$f" \
-		>$RPM_BUILD_ROOT%{_pkgconfigdir}/$(basename $f)
-done
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -93,18 +79,19 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS.txt COPYING.txt ChangeLog.txt README.md
 %attr(755,root,root) %{_bindir}/gflags_completions.sh
 %attr(755,root,root) %{_libdir}/libgflags.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgflags.so.2
+%attr(755,root,root) %ghost %{_libdir}/libgflags.so.2.2
 %attr(755,root,root) %{_libdir}/libgflags_nothreads.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgflags_nothreads.so.2
+%attr(755,root,root) %ghost %{_libdir}/libgflags_nothreads.so.2.2
 
 %files devel
 %defattr(644,root,root,755)
-%doc doc/{index.html,designstyle.css}
+# not present in 2.2.0
+#%doc doc/{index.html,designstyle.css}
 %attr(755,root,root) %{_libdir}/libgflags.so
 %attr(755,root,root) %{_libdir}/libgflags_nothreads.so
 %{_includedir}/gflags
-%{_pkgconfigdir}/libgflags.pc
-%{_pkgconfigdir}/libgflags_nothreads.pc
+%{_pkgconfigdir}/gflags.pc
+%{_pkgconfigdir}/gflags_nothreads.pc
 %{_libdir}/cmake/gflags
 
 %files static

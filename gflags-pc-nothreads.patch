@@ -1,0 +1,26 @@
+--- gflags-2.2.0/cmake/package_nothreads.pc.in.orig	1970-01-01 01:00:00.000000000 +0100
++++ gflags-2.2.0/cmake/package_nothreads.pc.in	2016-12-26 09:36:10.647054844 +0100
+@@ -0,0 +1,12 @@
++prefix=@CMAKE_INSTALL_PREFIX@
++exec_prefix=${prefix}
++bindir=${prefix}/@RUNTIME_INSTALL_DIR@
++libdir=${prefix}/@LIBRARY_INSTALL_DIR@
++includedir=${prefix}/@INCLUDE_INSTALL_DIR@
++
++Name: @PACKAGE_NAME@_nothreads
++Version: @PACKAGE_VERSION@
++Description: @PACKAGE_DESCRIPTION@
++URL: @PACKAGE_URL@
++Libs: -L${libdir} -lgflags_nothreads
++Cflags: -I${includedir}
+--- gflags-2.2.0/CMakeLists.txt.orig	2016-11-25 19:54:37.000000000 +0100
++++ gflags-2.2.0/CMakeLists.txt	2016-12-26 09:36:48.167054416 +0100
+@@ -533,6 +533,8 @@
+ if (PKGCONFIG_INSTALL_DIR)
+   configure_file ("cmake/package.pc.in" "${PROJECT_BINARY_DIR}/${PACKAGE_NAME}.pc" @ONLY)
+   install (FILES "${PROJECT_BINARY_DIR}/${PACKAGE_NAME}.pc" DESTINATION "${PKGCONFIG_INSTALL_DIR}")
++  configure_file ("cmake/package_nothreads.pc.in" "${PROJECT_BINARY_DIR}/${PACKAGE_NAME}_nothreads.pc" @ONLY)
++  install (FILES "${PROJECT_BINARY_DIR}/${PACKAGE_NAME}_nothreads.pc" DESTINATION "${PKGCONFIG_INSTALL_DIR}")
+ endif ()
+ 
+ # ----------------------------------------------------------------------------
