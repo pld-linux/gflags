@@ -1,3 +1,4 @@
+# TODO: fix cmake file to not require static lib for detection
 Summary:	A commandline flags library that allows for distributed flags
 Summary(pl.UTF-8):	Biblioteka flag linii poleceń pozwalająca na rozproszone flagi
 Name:		gflags
