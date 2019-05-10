@@ -2,7 +2,7 @@ Summary:	A commandline flags library that allows for distributed flags
 Summary(pl.UTF-8):	Biblioteka flag linii poleceń pozwalająca na rozproszone flagi
 Name:		gflags
 Version:	2.2.2
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/gflags/gflags/releases
@@ -70,7 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 # disable completeness check incompatible with split packaging
-%{__sed} -i -e '/^foreach(target .*IMPORT_CHECK_TARGETS/,/^endforeach/d' $RPM_BUILD_ROOT%{_libdir}/cmake/gflags/gflags-targets.cmake
+%{__sed} -i -e '/^foreach(target .*IMPORT_CHECK_TARGETS/,/^endforeach/d' \
+	$RPM_BUILD_ROOT%{_libdir}/cmake/gflags/gflags-nonamespace-targets.cmake \
+	$RPM_BUILD_ROOT%{_libdir}/cmake/gflags/gflags-targets.cmake
 
 %clean
 rm -rf $RPM_BUILD_ROOT
