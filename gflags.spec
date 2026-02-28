@@ -1,16 +1,20 @@
+#
+# Conditional build:
+%bcond_without	static_libs	# static libraries
+
 Summary:	A commandline flags library that allows for distributed flags
 Summary(pl.UTF-8):	Biblioteka flag linii poleceń pozwalająca na rozproszone flagi
 Name:		gflags
-Version:	2.2.2
-Release:	2
+Version:	2.3.0
+Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/gflags/gflags/releases
-Source0:	https://github.com/schuhschuh/gflags/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	1a865b93bacfa963201af3f75b7bd64c
+Source0:	https://github.com/gflags/gflags/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	7a151c1019d8a9fd2c126b7d9905e75b
 Patch0:		%{name}-pc-nothreads.patch
 URL:		http://gflags.github.io/gflags/
-BuildRequires:	cmake >= 3.0.2
+BuildRequires:	cmake >= 3.10
 BuildRequires:	libstdc++-devel
 BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -60,7 +64,7 @@ Statyczna biblioteka gflags.
 install -d build
 cd build
 %cmake .. \
-	-DBUILD_STATIC_LIBS=ON
+	%{?with_static_libs:-DBUILD_STATIC_LIBS=ON}
 %{__make}
 
 %install
@@ -68,11 +72,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-# disable completeness check incompatible with split packaging
-%{__sed} -i -e '/^foreach(target .*IMPORT_CHECK_TARGETS/,/^endforeach/d' \
-	$RPM_BUILD_ROOT%{_libdir}/cmake/gflags/gflags-nonamespace-targets.cmake \
-	$RPM_BUILD_ROOT%{_libdir}/cmake/gflags/gflags-targets.cmake
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -83,24 +82,25 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS.txt COPYING.txt ChangeLog.txt README.md
-%attr(755,root,root) %{_bindir}/gflags_completions.sh
-%attr(755,root,root) %{_libdir}/libgflags.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgflags.so.2.2
-%attr(755,root,root) %{_libdir}/libgflags_nothreads.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgflags_nothreads.so.2.2
+%{_bindir}/gflags_completions.sh
+%{_libdir}/libgflags.so.*.*.*
+%ghost %{_libdir}/libgflags.so.2.3
+%{_libdir}/libgflags_nothreads.so.*.*.*
+%ghost %{_libdir}/libgflags_nothreads.so.2.3
 
 %files devel
 %defattr(644,root,root,755)
-# not present in 2.2.0
-#%doc doc/{index.html,designstyle.css}
-%attr(755,root,root) %{_libdir}/libgflags.so
-%attr(755,root,root) %{_libdir}/libgflags_nothreads.so
+%doc doc/{index.html,designstyle.css}
+%{_libdir}/libgflags.so
+%{_libdir}/libgflags_nothreads.so
 %{_includedir}/gflags
 %{_pkgconfigdir}/gflags.pc
 %{_pkgconfigdir}/gflags_nothreads.pc
 %{_libdir}/cmake/gflags
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libgflags.a
 %{_libdir}/libgflags_nothreads.a
+%endif
