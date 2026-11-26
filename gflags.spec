@@ -5,13 +5,13 @@
 Summary:	A commandline flags library that allows for distributed flags
 Summary(pl.UTF-8):	Biblioteka flag linii poleceń pozwalająca na rozproszone flagi
 Name:		gflags
-Version:	2.3.0
+Version:	2.3.1
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/gflags/gflags/releases
 Source0:	https://github.com/gflags/gflags/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	7a151c1019d8a9fd2c126b7d9905e75b
+# Source0-md5:	400fc3ef65a56f73d390778da0c15cb0
 Patch0:		%{name}-pc-nothreads.patch
 URL:		http://gflags.github.io/gflags/
 BuildRequires:	cmake >= 3.10
